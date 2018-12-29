@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Comment CommentText="该类用于运算符重载，重载符号为括号（），用于查找函数find_if( )。">
+    <Position X="14.698" Y="4.365" Height="1.229" Width="2.158" />
+  </Comment>
+  <Comment CommentText="Word类为基类，数据成员为单词的拼写、词性、例句、释义">
+    <Position X="11.104" Y="2.365" Height="0.75" Width="1.7" />
+  </Comment>
+  <Comment CommentText="Word_Store类由Word类派生而来，该类用于存储单词，">
+    <Position X="7.792" Y="7.24" Height="0.75" Width="1.7" />
+  </Comment>
+  <Comment CommentText="Word_Favorite类由Word_Store类派生而来，该类用于收藏单词。">
+    <Position X="7.792" Y="10.677" Height="0.75" Width="1.7" />
+  </Comment>
+  <Comment CommentText="Word_Recite类由Word类派生而来，该类用于背诵单词。">
+    <Position X="12.885" Y="6.948" Height="0.75" Width="1.7" />
+  </Comment>
+  <Class Name="Word">
+    <Position X="7.75" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAQAAAQAAIAAAAAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>WORD.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Word_Favorite">
+    <Position X="5.75" Y="10.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAgABAAAAAAAAQEAA=</HashCode>
+      <FileName>Word_Favorite.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="findx">
+    <Position X="12.75" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAIEAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Word_Findx.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Word_Store">
+    <Position X="5.75" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAABAAIAABAQAAAAACAEIAAAACAAARAACAAA=</HashCode>
+      <FileName>Word_Store.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Word_Recite">
+    <Position X="10.25" Y="6.25" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAEAAAAAAAABAAAAAAAAAAAAEAAAEAAAABAA=</HashCode>
+      <FileName>Word_Recite.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>

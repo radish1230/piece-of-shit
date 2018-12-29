@@ -21,7 +21,13 @@
     <ClInclude Include="Word_Store.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Findx.h">
+    <ClInclude Include="Word_Favorite.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Word_Findx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Word_Recite.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -38,5 +44,15 @@
     <ClCompile Include="Word_Store.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Word_Favorite.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Word_Recite.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

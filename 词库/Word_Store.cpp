@@ -1,32 +1,30 @@
 #include "Word_Store.h"
-#include"Findx.h"
+#include"Word_Findx.h"
 fstream file;
-
-vector<Word_Store>word;				/*声明vector,全局变量*/
+ vector<Word_Store>word;				/*声明vector,全局变量*/
+ vector<Word_Store>::iterator loc;     //用于查询单词
 
 bool Fsort(Word_Store a, Word_Store b) { return a.spell < b.spell; }  //用于sort函数排序，大于小于控制升序降序
 
-void Word_Store::Inster()
+void Word_Store::Insert()
 {
 	file.open("生词本.txt", ios::in | ios::app);
 	if (file.is_open() == 1)
 	{
 		Word temp;
-		cout << "输入单词的拼写" << endl;
-		cin >> temp.spell;
-		//getline(cin, temp.spell);
-
-		cout << "输入单词的词性" << endl;
-		cin >> temp.pos;
-		//getline(cin, temp.pos);
-
-		cout << "输入单词的意思" << endl;
-		cin >> temp.meaning;
-		//getline(cin, temp.meaning);
 		getchar();
+		cout << "输入单词的拼写" << endl;
+		getline(cin, temp.spell);
+		//cin >> temp.spell;
+		cout << "输入单词的词性" << endl;
+		getline(cin, temp.pos);
+		//cin >> temp.pos;
+		cout << "输入单词的意思" << endl;
+		getline(cin, temp.meaning);
+		//cin >> temp.meaning;
 		cout << "输入单词的例句" << endl;
 		getline(cin, temp.sen);
-		file << temp.spell << "  " <<temp.pos<<"  "<< temp.meaning <<"  "<<temp.sen<< endl;
+		file << temp.spell << '#' <<temp.pos<<'#'<< temp.meaning <<'#'<<temp.sen<<'#'<< endl;
 		file.close();
 	}
 }
@@ -48,16 +46,20 @@ void Word_Store::Show_W_txt()
 }
 void Word_Store::SetVector()
 {
-	char buffer[100];
-	int num = 0;
+	char buffer[200];
+	
 	file.open("生词本.txt", ios::in | ios::out);
 	while (!file.eof())
-	{
-
-		file.getline(buffer, 100);
+	{	
+		file.getline(buffer, 200);			//这个大小很重要…可以写进报告里
+		
 		istringstream is(buffer);    //字符串写入内存
-		string s1, s2,s3,s4;
-		is >> s1 >> s2>>s3>>s4;			//字符串写入内存
+		string s1,s2,s3,s4;
+		//is >> s1 >> s2>>s3>>s4;			//字符串写入内存
+		getline(is, s1, '#');
+		getline(is, s2, '#');
+		getline(is, s3, '#');
+		getline(is, s4,'#');
 		Word_Store temp;
 		temp.spell = s1;
 		temp.pos = s2;
@@ -73,41 +75,129 @@ void Word_Store::VectorSort()
 }
 void Word_Store::Show_V_S()
 {
+	word.clear();
+	SetVector();
+	VectorSort();
 	for (int i = 0; i < word.size(); i++)
-		cout << word[i].spell << "  "<<word[i].pos<<"  " << word[i].meaning << endl;
-		
+		if(!word[i].spell.empty())                   //判断是否为空，为了降低二次分配时的成本，
+													//vector实际配置的大小可能比客户需求的更大一些
+		cout << "拼写:"<<word[i].spell << "  词性："<<word[i].pos<<"  释义：" << word[i].meaning << endl;
+	word.clear();
 }
 
 void Word_Store::Acc_Find()
 {
 	SetVector();
 	string test;
+	getchar();
 	cout << "输入单词" << endl;
-	cin >> test;
-	vector<Word_Store>::iterator loc;
+	getline(cin, test);
 	loc = find_if(word.begin(), word.end(), findx(test));
-	cout << "位置是" << loc - word.begin() + 1 << endl;
-	cout << (*loc).spell << " " << (*loc).pos<<" "<<(*loc).meaning << "  "<< (*loc).sen<<endl;
+	if (loc!=word.end())
+	{
+	//	cout << "位置是" << loc - word.begin() + 1 << endl;
+		cout << (*loc).spell << " " << (*loc).pos << " " << (*loc).meaning << "  " << (*loc).sen << endl;
+	}
+	else
+	{
+		cout << "未查到" << endl;
+	}
 }
 
-void Word_Store::Erase()
+void Word_Store::Erase()                              
 {
 	SetVector();
 	cout << "输入要删除的单词" << endl;
 	string test;
 	cin >> test;
-	vector<Word_Store>::iterator loc;
+	int k;
 	loc = find_if(word.begin(), word.end(), findx(test));
-	word.erase(loc);
-	
+	if (loc != word.end())
+	{
+		cout << (*loc).spell << " " << (*loc).pos << " " << (*loc).meaning << "  " << (*loc).sen << endl;
+
+		cout << "是否要删除该单词 1.是 2.不是" << endl;
+		cin >> k;
+		switch (k)
+		{
+		case 1:
+			word.erase(loc);
+			cout << "已从词库中删除该单词" << endl;
+			break;
+		case 2:
+			cout << "未删除" << endl;
+			break;
+		}
+
+	}
+	else
+		cout << "未查找到该单词" << endl;
 	file.open("生词本.txt", ios::in | ios::out | ios::trunc);
 	for (int i = 0; i < word.size(); i++)
 		if (file.is_open() == 1)
 		{
-			file << word[i].spell << "  " << word[i].meaning << endl;
+			file << word[i].spell << '#' <<word[i].pos<< '#' << word[i].meaning << '#' <<word[i].sen<< endl;
 		}
 
 	file.close();
+
+}
+void Word_Store::Change()
+{
+	SetVector();
+	cout << "输入要修改的单词" << endl;
+	string test;
+	string s1, s2, s3, s4;
+	cin >> test;
+	vector<Word_Store>::iterator loc;
+	loc = find_if(word.begin(), word.end(), findx(test));
+	if (loc != word.end())
+	{
+		cout << "该单词的内容为" << endl;
+		cout << (*loc).spell << " " << (*loc).pos << " " << (*loc).meaning << "  " << (*loc).sen << endl;
+
+		int k = 0;
+
+		while (k != 5)
+		{
+			cout << "请选择要修改的内容:1.拼写  2.词性   3.释义  4.例句 5.修改完毕" << endl;
+			cin >> k;
+			switch (k)
+			{
+			case 1:	cout << "输入单词拼写" << endl;
+				cin >> (*loc).spell;
+				break;
+			case 2:
+				cout << "输入单词词性" << endl;
+				cin >> (*loc).pos;
+				break;
+			case 3:
+				cout << "输入单词释义" << endl;
+				cin >> (*loc).meaning;
+				break;
+			case 4:
+				cout << "输入单词例句" << endl;
+				getline(cin, (*loc).sen);
+				break;
+
+			default:
+				break;
+			}
+		}
+		file.open("生词本.txt", ios::in | ios::out | ios::trunc);
+		for (int i = 0; i < word.size(); i++)
+			if (file.is_open() == 1)
+			{
+				file << word[i].spell << '#' << word[i].pos << '#' << word[i].meaning << '#' << word[i].sen <<'#'<< endl;
+			}
+
+		file.close();
+
+	}
+	else
+	{
+		cout << "未查到单词" << endl;
+	}
 
 }
 #include"pch.h"

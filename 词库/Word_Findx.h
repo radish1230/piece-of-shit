@@ -6,20 +6,20 @@ class findx											//用于查找函数
 public:
 	findx(const string str)
 	{
-		test = str;
+		input = str;
 	}
 	string GetTest()
 	{
-		return test;
+		return input;
 	}
 	bool operator()(Word_Store& dvalue)                  //重载括号运算符，用于查找find_if函数
 	{
 
-		if (dvalue.Getspell().compare(test) == 0)
+		if (dvalue.Getspell().compare(input) == 0)
 			return true;
 		else
 			return false;
 	}
 private:
-	string test;
+	string input;
 };
